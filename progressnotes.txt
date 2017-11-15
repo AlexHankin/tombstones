@@ -1,0 +1,37 @@
+==================Luba===========================
+TODO:
+ define structure,break into steps of what u gotta do, read about smart pointers
+=====notes about the project======
+reclaim object whose address isn't in any global var, stack var, or heap var
+ERROR CHECKING:
+1) memory leak: each time reference count to tombstone reaches 0 (i.e. no pointers to obj left), but tombstone points to an object - throw error.
+2) dangling pointer: each time you create a pointer to a tombstone, if tombstone doesn't point to an object (i.e. object is null), throw error
+
+GOOD CASE:
+if ref count == 0, tombstone doesn't point to anything - cool beans, reclaim the tombstone.
+
+TASK:
+build template that behaves like pointer, uses tombstone for error checking
+--template is Pointer class. Write methods for it. Put pointer class in "tombstones.h"
+-- your program should take pointer-based program, replace
+instances of T* with Pointer<T>, compile and run it correctly
+--if dangling ref/mem leak - throw run time error
+--auto reclaim tombstones when ref count reaches 0
+
+QUESTION:
+when do we check for errors?
+do I immediately delete tombstones? 
+" The programmer remains responsible for manual storage reclamation" - reclamation of both obj and tombstones???
+======================Alex========================
+TODO: fill out methods for class Pointer
+in smartpointer article there is an example of
+template classuse
+NOTE:
+operator->. When you apply operator-> to a type that's not a built-in pointer, the compiler does an interesting thing. After looking up and applying the user-defined operator-> to that type, it applies operator-> again to the result. The compiler keeps doing this recursively until it reaches a pointer to a built-in type, and only then proceeds with member access. It follows that a smart pointer's operator-> does not have to return a pointer. It can return an object that in turn implements operator->, without changing the use syntax.
+
+operator->, the sequence of execution is as follows:
+
+-Constructor of PointerType
+-PointerType::operator-> called; likely returns a pointer to an object of type PointeeType
+-Member access for PointeeType—likely a function call
+-Destructor of PointerType
