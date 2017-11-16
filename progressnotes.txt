@@ -1,6 +1,7 @@
 ==================Luba===========================
 TODO:
- create tombstone
+ create tombstone free? when to check errors? figure out access to obj
+ write operator->, operator* for tombstones.h
 =====notes about the project======
 reclaim object whose address isn't in any global var, stack var, or heap var
 ERROR CHECKING:
@@ -26,7 +27,8 @@ when do we check for errors?
 " The programmer remains responsible for manual storage reclamation" - reclamation of both obj and tombstones???
 //do I need to take refcount as constructor param or always init refCount = 1
 //do i check refcount on increment and decrement?
-do I delete tombstone from within tombstone class?
+do I delete tombstone from within tombstone class? or smart pointer does it?
+does tombstone delete obj? or also via smart pointer? guess doesn't matter
 ======================Alex========================
 TODO: fill out methods for class Pointer
 in smartpointer article there is an example of
