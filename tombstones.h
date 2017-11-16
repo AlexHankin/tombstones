@@ -13,7 +13,7 @@ template <class T>
 class Pointer {
 public:
     Pointer<T>() {
-         // default constructor
+        // default constructor
         //init self???
     }                             
     Pointer<T>(Pointer<T>& otherPointer) {// copy constructor
@@ -31,14 +31,22 @@ public:
     T* operator->() const {
         return t->pointerToObj; //CHECK
     }                  // field dereferencing
-    Pointer<T>& operator=(const Pointer<T>&);       // assignment
+    Pointer<T>& operator=(const Pointer<T>& otherPointer) {
+        this->t = otherPointer->t; //does it assign same object to this pointer?
+    }       // assignment
     friend void free<T>(Pointer<T>&);           // delete pointed-at object
         // This is essentially the inverse of the new inside the call to
         // the bootstrapping constructor.
     //free deletes the tombstone and object and pointer
     // equality comparisons:
-    bool operator==(const Pointer<T>&) const;
-    bool operator!=(const Pointer<T>&) const;
+    bool operator==(const Pointer<T>& otherPointer) const {
+        if (this->t == otherPointer->t) return true;
+        else return false;
+    }
+    bool operator!=(const Pointer<T>&) const {
+        if (this->t == otherPointer->t) return false;
+        else return true;
+    }
     bool operator==(const int) const;
         // true iff Pointer is null and int is zero
     bool operator!=(const int) const;

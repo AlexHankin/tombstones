@@ -1,7 +1,8 @@
 ==================Luba===========================
 TODO:
  create tombstone free? when to check errors? figure out access to obj
- write operator->, operator* for tombstones.h
+ write operator->, operator* for tombstones.h, instal g++, check if anyting works
+ 
 =====notes about the project======
 reclaim object whose address isn't in any global var, stack var, or heap var
 ERROR CHECKING:
@@ -29,6 +30,7 @@ when do we check for errors?
 //do i check refcount on increment and decrement?
 do I delete tombstone from within tombstone class? or smart pointer does it?
 does tombstone delete obj? or also via smart pointer? guess doesn't matter
+what does this: ~Pointer<T>();  do?
 ======================Alex========================
 TODO: fill out methods for class Pointer
 in smartpointer article there is an example of
