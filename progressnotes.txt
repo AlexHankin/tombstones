@@ -1,6 +1,6 @@
 ==================Luba===========================
 TODO:
- define structure,break into steps of what u gotta do, read about smart pointers
+ create tombstone
 =====notes about the project======
 reclaim object whose address isn't in any global var, stack var, or heap var
 ERROR CHECKING:
@@ -9,6 +9,9 @@ ERROR CHECKING:
 
 GOOD CASE:
 if ref count == 0, tombstone doesn't point to anything - cool beans, reclaim the tombstone.
+
+REFERENCE COUNTING:
+Reference counting tracks the number of smart pointers that point to the same object. When that number goes to zero, the pointee object is deleted. 
 
 TASK:
 build template that behaves like pointer, uses tombstone for error checking
@@ -20,12 +23,18 @@ instances of T* with Pointer<T>, compile and run it correctly
 
 QUESTION:
 when do we check for errors?
-do I immediately delete tombstones? 
 " The programmer remains responsible for manual storage reclamation" - reclamation of both obj and tombstones???
+//do I need to take refcount as constructor param or always init refCount = 1
+//do i check refcount on increment and decrement?
+do I delete tombstone from within tombstone class?
 ======================Alex========================
 TODO: fill out methods for class Pointer
 in smartpointer article there is an example of
 template classuse
+TAKE A LOOK AT SMART POINTER ARTCILE. code for template functions
+is literally THERE
+
+
 NOTE:
 operator->. When you apply operator-> to a type that's not a built-in pointer, the compiler does an interesting thing. After looking up and applying the user-defined operator-> to that type, it applies operator-> again to the result. The compiler keeps doing this recursively until it reaches a pointer to a built-in type, and only then proceeds with member access. It follows that a smart pointer's operator-> does not have to return a pointer. It can return an object that in turn implements operator->, without changing the use syntax.
 

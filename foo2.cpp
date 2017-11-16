@@ -37,4 +37,5 @@ int main(int argc, char **argv)
     Error("Attempt to double-delete pointer not flagged!");
 
     return 0;
+    
 }
