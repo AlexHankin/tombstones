@@ -21,10 +21,14 @@ public:
         // default constructor
                                  
     Pointer<T>(Pointer<T>& otherPointer) {// copy constructor
-        t = otherPointer.t; //CHECK
+        t = otherPointer.t;
+        cout << "From Pointer<T>(Pointer<T>& otherPointer) {\n";
+        t.incrementRefCount();
     }                       
     Pointer<T>(T* object) {// bootstrapping constructor, argument should always be a call to new
         t.setMyTombstone(object, 1);
+        cout << "From Pointer<T>(T* object) {\n";
+        t.printObj();
         //if pointer was pointed to some object x2 before, and x2 wasn't deleted
         //do I throw error here???
     }                           
@@ -40,6 +44,7 @@ public:
     }                  // field dereferencing
     Pointer<T>& operator=(const Pointer<T>& otherPointer) {
         t = otherPointer.t; //does it assign same object to this pointer?
+        t.incrementRefCount();
     }       // assignment
     friend void free<T>(Pointer<T>&);
     // {

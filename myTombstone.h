@@ -45,10 +45,11 @@ public:
 	}
 
 	T* getObj () const{
+		cout << "printing object: " <<*pointerToObj << " in get obj \n";
 		return pointerToObj;
 	}
 	void printObj() const{
-		cout << "printing object" <<*pointerToObj;
+		cout << "printing object: " <<*pointerToObj << " in print obj \n";
 	}
 	void error(const char *text) {
     	cout << "ERROR: " << text;
