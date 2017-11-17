@@ -22,16 +22,15 @@ int main(int argc, char **argv)
 
     if (bar == 0)
 	error("Bar should not be null!");
-    cout << "welp";
- //    if (*bar != 12)
-	// error("Bar got the wrong value!");
- //    if (foo != bar)
-	// error("Foo and bar are NOT distinct pointers!");
- //    if (*foo != *bar)
-	// error("Foo and bar should have the same value here!");
- //    *foo = 15;
- //    if (*bar != 15)
-	// error("Bar should still match foo!");
+    if (*bar != 12)
+	error("Bar got the wrong value!");
+    if (foo != bar)
+	error("Foo and bar are NOT distinct pointers!");
+    if (*foo != *bar)
+	error("Foo and bar should have the same value here!");
+    *foo = 15;
+    if (*bar != 15)
+	error("Bar should still match foo!");
 
  //    free(foo);
  //    free(bar);
