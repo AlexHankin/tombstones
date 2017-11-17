@@ -4,12 +4,6 @@
 #include <stdlib.h>
 using namespace std;
 
-// template <class T> class MyTombstone;
-// template <class T>
-// struct MyTombstone{
-// 	T* pointerToObj;
-// 	int refCount;
-// };
 template <class T>
 class MyTombstone {
 private:
@@ -50,8 +44,11 @@ public:
 		}
 	}
 
-	T* getObj () {
+	T* getObj () const{
 		return pointerToObj;
+	}
+	void printObj() const{
+		cout << "printing object" <<*pointerToObj;
 	}
 	void error(const char *text) {
     	cout << "ERROR: " << text;

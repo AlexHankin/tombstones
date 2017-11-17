@@ -20,8 +20,9 @@ int main(int argc, char **argv)
     foo = new int(12);
     Pointer<int> bar(foo);
 
- //    if (bar == 0)
-	// error("Bar should not be null!");
+    if (bar == 0)
+	error("Bar should not be null!");
+    cout << "welp";
  //    if (*bar != 12)
 	// error("Bar got the wrong value!");
  //    if (foo != bar)

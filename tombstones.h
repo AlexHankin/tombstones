@@ -5,6 +5,9 @@
 #if !defined(__TOMBSTONES_H__)
 #define __TOMBSTONES_H__
 #include "myTombstone.h"
+#include <iostream>
+#include <stdlib.h>
+using namespace std;
 template <class T> class Pointer;
 template <class T> void free(Pointer<T>& obj);
 //access object the tombstone is pointing to
@@ -12,9 +15,11 @@ template <class T> void free(Pointer<T>& obj);
 template <class T>
 class Pointer {
 public:
-    Pointer<T>();
+    Pointer<T>() {
+       //init self???  
+    }
         // default constructor
-        //init self???                          
+                                 
     Pointer<T>(Pointer<T>& otherPointer) {// copy constructor
         t = otherPointer.t; //CHECK
     }                       
@@ -23,7 +28,9 @@ public:
         //if pointer was pointed to some object x2 before, and x2 wasn't deleted
         //do I throw error here???
     }                           
-    ~Pointer<T>();                              // destructor
+    ~Pointer<T>() {// destructor
+        // delete [] t;
+    }
      T& operator*() const;
      // {
     //     return (t->pointerToObj)&; //CHECK
@@ -52,11 +59,13 @@ public:
     //     if (this->t == otherPointer->t) return false;
     //     else return true;
     // }
-    bool operator==(const int refInt) const;
-    //  {
-    //     if (this->t == NULL && refInt == 0) return true;
-    //     else return false;
-    // }
+    bool operator==(const int refInt) const {
+        if (*(t.getObj()) == refInt) {
+            t.printObj();
+            return true;
+        }
+        else return false;
+    }
         // true iff Pointer is null and int is zero
     bool operator!=(const int refInt) const;
     // {
