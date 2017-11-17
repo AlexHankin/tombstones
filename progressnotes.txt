@@ -30,14 +30,11 @@ when do we check for errors?
 //do i check refcount on increment and decrement?
 do I delete tombstone from within tombstone class? or smart pointer does it?
 does tombstone delete obj? or also via smart pointer? guess doesn't matter
-what does this: ~Pointer<T>();  do?
+what does this: ~Pointer<T>();  do? //It looks like some sort of function that removes the pointer, and from what it looks like it seems
+that just having the "~" may do this automatically. So I'm leaving the function alone for now.
 ======================Alex========================
 TODO: fill out methods for class Pointer
-in smartpointer article there is an example of
-template classuse
-TAKE A LOOK AT SMART POINTER ARTCILE. code for template functions
-is literally THERE
-
+I'm unsure, but I did implement something for the functions based on what the pointers appeared to look like
 
 NOTE:
 operator->. When you apply operator-> to a type that's not a built-in pointer, the compiler does an interesting thing. After looking up and applying the user-defined operator-> to that type, it applies operator-> again to the result. The compiler keeps doing this recursively until it reaches a pointer to a built-in type, and only then proceeds with member access. It follows that a smart pointer's operator-> does not have to return a pointer. It can return an object that in turn implements operator->, without changing the use syntax.

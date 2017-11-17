@@ -34,7 +34,11 @@ public:
     Pointer<T>& operator=(const Pointer<T>& otherPointer) {
         this->t = otherPointer->t; //does it assign same object to this pointer?
     }       // assignment
-    friend void free<T>(Pointer<T>&);           // delete pointed-at object
+    friend void free<T>(Pointer<T>&)
+    {
+        this->t = NULL;
+        ~Pointer<T>();  
+    }           // delete pointed-at object
         // This is essentially the inverse of the new inside the call to
         // the bootstrapping constructor.
     //free deletes the tombstone and object and pointer
