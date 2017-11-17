@@ -43,13 +43,19 @@ public:
         if (this->t == otherPointer->t) return true;
         else return false;
     }
-    bool operator!=(const Pointer<T>&) const {
+    bool operator!=(const Pointer<T>& otherPointer) const {
         if (this->t == otherPointer->t) return false;
         else return true;
     }
-    bool operator==(const int) const;
+    bool operator==(const int refInt) const {
+        if (this->t == NULL && refInt == 0) return true;
+        else return false;
+    }
         // true iff Pointer is null and int is zero
-    bool operator!=(const int) const;
+    bool operator!=(const int refInt) const {
+        if (this->t == NULL && refInt == 0) return false;
+        else return true;
+    }
         // false iff Pointer is null and int is zero
 private:
     Tombstone t;
