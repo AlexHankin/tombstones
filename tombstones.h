@@ -11,7 +11,12 @@ using namespace std;
 template <class T> class Pointer;
 template <class T> void free(Pointer<T>& obj)
 {
-    obj.t.deleteMyTombstone();
+    if (!obj.initialized) {
+        cout << "ERROR: Tried to release uninitialized pointer at address " << obj.t.getObj() << endl << "Aborting program...";
+        exit(0);
+    }
+    else
+        obj.t.deleteMyTombstone();
 }
 //access object the tombstone is pointing to
 
@@ -19,17 +24,20 @@ template <class T>
 class Pointer {
 public:
     Pointer<T>() {
+        initialized = false;
        //init self???  
     }
         // default constructor
                                  
     Pointer<T>(Pointer<T>& otherPointer) {// copy constructor
+        initialized = true;
         t = otherPointer.t;
         cout << "From Pointer<T>(Pointer<T>& otherPointer) {\n";
         t.incrementRefCount();
         t.printObj();
     }                       
     Pointer<T>(T* object) {// bootstrapping constructor, argument should always be a call to new
+        initialized = true;
         t.setMyTombstone(object, 1);
         cout << "From Pointer<T>(T* object) {\n";
         t.printObj();
@@ -49,7 +57,7 @@ public:
     T* operator->() const {
         cout << "From operator->\n";
         t.printObj();
-        return t.pointerToObj; //CHECK
+        return t.getObj(); //CHECK
     }                  // field dereferencing
     Pointer<T>& operator=(const Pointer<T>& otherPointer) {
         cout << "From Pointer<T>& operator=(const Pointer<T>& otherPointer) \n";
@@ -96,6 +104,7 @@ public:
         // false iff Pointer is null and int is zero
 private:
     MyTombstone<T> t;
+    bool initialized;
 };
 
 
