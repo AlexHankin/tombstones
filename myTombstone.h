@@ -23,11 +23,12 @@ public:
 		refCount--;		
 		return refCount;
 	}
-	// int getrefCount() {
-
-	// }
+	int getrefCount() const{
+		return refCount;
+	}
 	void deleteMyTombstone () {
-		delete this;
+		pointerToObj = NULL;
+		refCount = 0;
 	}
 	void checkError () {
 		//if object tombstone is pointing to is null
@@ -47,8 +48,9 @@ public:
 	T* getObj () const{
 		return pointerToObj;
 	}
+
 	void printObj() const{
-		cout << "printing object: " <<*pointerToObj << " refCount: " << refCount << " \n\n";
+		//cout << "printing object: " << *pointerToObj << " refCount: " << refCount << " \n\n";
 	}
 	void error(const char *text) {
     	cout << "ERROR: " << text;

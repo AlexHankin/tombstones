@@ -9,7 +9,10 @@
 #include <stdlib.h>
 using namespace std;
 template <class T> class Pointer;
-template <class T> void free(Pointer<T>& obj);
+template <class T> void free(Pointer<T>& obj)
+{
+    obj.t.deleteMyTombstone();
+}
 //access object the tombstone is pointing to
 
 template <class T>
@@ -34,7 +37,8 @@ public:
         //do I throw error here???
     }                           
     ~Pointer<T>() {// destructor
-        // delete [] t;
+        t.decrementRefCount();
+        //t = NULL;
     }
      T& operator*() const // deferencing
      {//CHECK
@@ -54,10 +58,10 @@ public:
         t.printObj();
     }       // assignment
     friend void free<T>(Pointer<T>&);
-    // {
-    //     this->t = NULL;
-    //     ~Pointer<T>();  
-    // }           // delete pointed-at object
+    //{
+    //    t = NULL;
+    //    ~Pointer<T>();  
+    //}           // delete pointed-at object
         // This is essentially the inverse of the new inside the call to
         // the bootstrapping constructor.
     //free deletes the tombstone and object and pointer
@@ -65,7 +69,7 @@ public:
     bool operator==(const Pointer<T>& otherPointer) const {
         cout << "operator==(const Pointer<T>& otherPointer)\n";
         t.printObj();
-        if (t.getObj() == otherPointer.t.getObj() && t.refCount == otherPointer.t.refCount)  return true;
+        if (t.getObj() == otherPointer.t.getObj() && t.getrefCount() == otherPointer.t.getrefCount())  return true;
         else return false;
     }
     bool operator!=(const Pointer<T>& otherPointer) const {
@@ -85,6 +89,7 @@ public:
     bool operator!=(const int refInt) const {
         cout << "operator!=(const int refInt)\n";
         t.printObj();
+        cout << *t.getObj() << endl;
         if (*(t.getObj()) != refInt) return true;
         else return false;
     }
