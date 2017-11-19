@@ -15,13 +15,15 @@ public:
 		pointerToObj = obj;
 	 	refCount = count;
 	}
-	int incrementRefCount() {
+	void incrementRefCount() {
+		cout << "call increment refcount \n";
+		printObj();
 		refCount++;
-		return refCount;
+		// return refCount;
 	}
-	int decrementRefCount() {
+	void decrementRefCount() {
 		refCount--;		
-		return refCount;
+		// return refCount;
 	}
 	int getrefCount() const{
 		return refCount;
@@ -46,7 +48,8 @@ public:
 		//no pointers pointing to obj, object is deleted -> reclaim tombstone
 		if (refCount == 0 && !pointerToObj) {
 			{cout << "Tester3" << endl;
-			// deleteMyTombstone();
+			 deleteMyTombstone();
+			 printObj();
 		}
 		}
 	}

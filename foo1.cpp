@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 	 error("Bar should be null!");
     
     bar = new int(12);
-
+    // bar = new int(32);
     if (foo == bar)
 	 error("Foo and bar are distinct pointers!");
 
@@ -39,6 +39,7 @@ int main(int argc, char **argv)
 
     free(foo);
     free(bar);
+    free(tmp);
     cout << "foo1: OK" << endl;
     return 0;
 }
