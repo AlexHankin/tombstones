@@ -27,21 +27,25 @@ public:
 		return refCount;
 	}
 	void deleteMyTombstone () {
-		pointerToObj = NULL;
+		pointerToObj = 0;
 		refCount = 0;
 	}
 	void checkError () {
 		//if object tombstone is pointing to is null
-		if (!*pointerToObj) {
-			error("Your pointer is dangling!");
+		if (pointerToObj == 0) {
+			cout << "Tester1" << endl;
+			error("There is a dangling pointer concerning address: ");
 		}
 		//no pointers pointing to tombstone, but object isn't deleted
+		printObj();
 		if (refCount == 0 && pointerToObj) {
-			error("Attention: your memory is leaking.");
+			cout << "Tester2" << endl;
+			error("There is a memory leak concerning address: ");
 		}
 		//no pointers pointing to obj, object is deleted -> reclaim tombstone
 		if (refCount == 0 && !pointerToObj) {
-			deleteMyTombstone();
+			{cout << "Tester3" << endl;
+			deleteMyTombstone();}
 		}
 	}
 
@@ -50,10 +54,13 @@ public:
 	}
 
 	void printObj() const{
-		//cout << "printing object: " << *pointerToObj << " refCount: " << refCount << " \n\n";
+		if (pointerToObj == 0)
+			cout << "printing object: " << "NULL refCount: " << refCount << " \n\n";
+		else
+			cout << "printing object: " << *pointerToObj << " refCount: " << refCount << " \n\n";
 	}
 	void error(const char *text) {
-    	cout << "ERROR: " << text;
+    	cout << "ERROR: " << text << getObj() << endl;
     exit(-1);
 	}
 };

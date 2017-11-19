@@ -16,6 +16,7 @@ void error(const char *text)
 
 Pointer<int> &rec(int n, Pointer<int> foo)
 {
+    cout << "In rec" << endl;
     static Pointer<int> result(new int(*foo));
     if (0 == n)
 	return result;
@@ -26,6 +27,7 @@ Pointer<int> &rec(int n, Pointer<int> foo)
 
 Pointer<int> &recref(int n, Pointer<int> &foo)
 {
+    cout << "recref" << endl;
     if (0 == n)
 	return foo;
     *foo += 1;
@@ -34,6 +36,7 @@ Pointer<int> &recref(int n, Pointer<int> &foo)
 
 void proc()
 {
+    cout << "In proc" << endl;
     Pointer<int> foo(new int(0));
     Pointer<int> bar(rec(100, foo));
 

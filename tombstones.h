@@ -15,8 +15,9 @@ template <class T> void free(Pointer<T>& obj)
         cout << "ERROR: Tried to release uninitialized pointer at address " << obj.t.getObj() << endl << "Aborting program...";
         exit(0);
     }
-    else
+    else{
         obj.t.deleteMyTombstone();
+    }
 }
 //access object the tombstone is pointing to
 
@@ -34,6 +35,7 @@ public:
         t = otherPointer.t;
         cout << "From Pointer<T>(Pointer<T>& otherPointer) {\n";
         t.incrementRefCount();
+        //t.checkError();
         t.printObj();
     }                       
     Pointer<T>(T* object) {// bootstrapping constructor, argument should always be a call to new
@@ -45,7 +47,10 @@ public:
         //do I throw error here???
     }                           
     ~Pointer<T>() {// destructor
-        t.decrementRefCount();
+        cout << "Destruction? \n";
+        t.printObj();
+        //t.decrementRefCount();
+        t.checkError();
         //t = NULL;
     }
      T& operator*() const // deferencing
@@ -61,8 +66,9 @@ public:
     }                  // field dereferencing
     Pointer<T>& operator=(const Pointer<T>& otherPointer) {
         cout << "From Pointer<T>& operator=(const Pointer<T>& otherPointer) \n";
+        t.decrementRefCount();
         t = otherPointer.t; //does it assign same object to this pointer?
-        // t.incrementRefCount();
+        t.incrementRefCount();
         t.printObj();
     }       // assignment
     friend void free<T>(Pointer<T>&);
@@ -89,17 +95,25 @@ public:
     bool operator==(const int refInt) const {
         cout << "operator==(const int refInt)\n";
         t.printObj();
-        if (*(t.getObj()) == refInt) 
-            return true;
-        else return false;
+       if (t.getObj() == 0x0)
+            if (0 == refInt) return true;
+            else return false;
+        else{
+            if (*(t.getObj()) == refInt) return true;
+            else return false;
+        }
     }
         // true iff Pointer is null and int is zero
     bool operator!=(const int refInt) const {
         cout << "operator!=(const int refInt)\n";
         t.printObj();
-        cout << *t.getObj() << endl;
-        if (*(t.getObj()) != refInt) return true;
-        else return false;
+        if (t.getObj() == 0x0)
+            if (0 != refInt) return true;
+            else return false;
+        else{
+            if (*(t.getObj()) != refInt) return true;
+            else return false;
+        }
     }
         // false iff Pointer is null and int is zero
 private:
