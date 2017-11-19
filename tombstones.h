@@ -16,6 +16,7 @@ template <class T> void free(Pointer<T>& obj)
         exit(0);
     }
     else{
+        cout << "From free\n";
         obj.t.deleteMyTombstone();
     }
 }

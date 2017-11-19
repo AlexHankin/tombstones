@@ -27,12 +27,13 @@ public:
 		return refCount;
 	}
 	void deleteMyTombstone () {
+		cout << "deleting tombstone\n";
 		pointerToObj = 0;
 		refCount = 0;
 	}
 	void checkError () {
 		//if object tombstone is pointing to is null
-		if (pointerToObj == 0) {
+		if (pointerToObj == 0 && refCount > 0) {
 			cout << "Tester1" << endl;
 			error("There is a dangling pointer concerning address: ");
 		}
@@ -45,7 +46,8 @@ public:
 		//no pointers pointing to obj, object is deleted -> reclaim tombstone
 		if (refCount == 0 && !pointerToObj) {
 			{cout << "Tester3" << endl;
-			deleteMyTombstone();}
+			// deleteMyTombstone();
+		}
 		}
 	}
 
