@@ -86,8 +86,10 @@ public:
         //     t.checkError();
         // }
         //t = NULL;
-        pt->checkError();
-        pt->decrementRefCount();
+        if (pt->getDeleted() != true || pt->getObj() != 0) {
+            pt->checkError();
+            pt->decrementRefCount();
+        }        
         cout << "print end destruct\n";
         pt->printObj(cn);
     }
@@ -158,6 +160,7 @@ public:
         char const* cn = "operator!=(const Pointer<T>& otherPointer)";
         cout << cn << "\n";
         pt->checkError();
+        //cout << "Made it through error check \n";
         pt->printObj(cn);
         return pt != otherPointer.pt;
         // t.checkError();
@@ -168,8 +171,16 @@ public:
     bool operator==(const int refInt) const {
         char const* cn =  "operator==(const int refInt)";
         cout << cn << "\n";
+        pt->printObj(cn);
         pt->checkError();
-        return *(pt->getObj()) == refInt;
+        if (pt->getObj() == 0) {
+            if (refInt == 0)
+                return true;
+            else
+                return false;
+        }
+        else
+            return *(pt->getObj()) == refInt;
        //  t.checkError();
        //  t.printObj();
        // if (t.getObj() == 0x0)
@@ -184,11 +195,16 @@ public:
     bool operator!=(const int refInt) const {
        char const* cn =  "operator!=(const int refInt)";
         cout << cn << "\n";
+        pt->printObj(cn);
         pt->checkError();
-        return *(pt->getObj()) != refInt;
-        // t.checkError();
-        // t.printObj();
-        // if (t.getObj() == 0x0)
+        if (pt->getObj() == 0) {
+            if (refInt == 0)
+                return false;
+            else
+                return true;
+        }
+        else
+            return *(pt->getObj()) != refInt;
         //     if (0 != refInt) return true;
         //     else return false;
         // else{

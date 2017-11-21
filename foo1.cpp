@@ -42,7 +42,7 @@ int main(int argc, char **argv)
     
     free(foo);
     free(bar);
-    // free(tmp);
+    free(tmp);
     cout << "foo1: OK" << endl;
     return 0;
 }

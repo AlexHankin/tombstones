@@ -8,14 +8,20 @@ template <class T>
 class MyTombstone {
 private:
 	T* pointerToObj;
-	int refCount = 0;
-	bool deleted = false;
+	int refCount;
+	bool deleted;
 public:
 	//do I need to take refCount or always init refCount = 1
 	// void setMyTombstone (T* obj, int count) {
 	// 	pointerToObj = obj;
 	//  	refCount = count;
 	// }
+	MyTombstone(){
+		pointerToObj = 0;
+		refCount = 0;
+		deleted = false;
+	}
+
 	void setMyTombstone(T* obj) {
 		pointerToObj = obj;
 	}
@@ -46,6 +52,7 @@ public:
 		//if object tombstone is pointing to is null
 		if (deleted) {
 			cout << "Tester0" << endl;
+			cout << pointerToObj;
 		// 	error("Attempted to double delete: ");
 		// }
 		// if (pointerToObj == 0 && refCount > 0) {
@@ -54,6 +61,8 @@ public:
 		}
 		//no pointers pointing to tombstone, but object isn't deleted
 		printObj("checkError ");
+		//if (0 == pointerToObj)
+		//	cout << pointerToObj;
 		if (refCount <= 0 && pointerToObj) {
 			cout << "Tester2" << endl;
 			error("There is a memory leak concerning address: ");
@@ -71,14 +80,17 @@ public:
 	}
  
 	T* getObj () const{
-		return pointerToObj;
+		if (pointerToObj == 0)
+			return 0;
+		else
+			return pointerToObj;
 	}
 
 	void printObj(char const* funcname) const{
 		if (pointerToObj == 0)
 			cout << funcname << " printing object: " << "NULL refCount: " << refCount << " \n\n";
 		else
-			cout << "printing object: " << *pointerToObj << " refCount: " << refCount << " \n\n";
+			cout << "printing object: " << pointerToObj << " refCount: " << refCount << " \n\n";
 	}
 	void error(const char *text) {
     	cout << "ERROR: " << text << getObj() << endl;
