@@ -1,0 +1,7 @@
+foo1.o "foo1.ok"
+foo2.o "double deleted pointer error" - fail
+foo3.o "foo3.ok" - fail
+foo4.o "uninit pointer"
+foo5.o "memory leak" - fail
+foo6.o "mem leak" - fail
+foo7.o, foo8.o "dangling pointer" - fail

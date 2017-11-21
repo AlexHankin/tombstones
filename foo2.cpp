@@ -17,7 +17,9 @@ void error(const char *text)
 int main(int argc, char **argv)
 {
     Pointer<int> foo;
+    cout << "befor = \n";
     foo = new int(12);
+    cout << "after = \n";
     Pointer<int> bar(foo);
 
     if (bar == 0)
@@ -32,9 +34,9 @@ int main(int argc, char **argv)
     if (*bar != 15)
 	error("Bar should still match foo!");
 
- //    free(foo);
- //    free(bar);
- //    error("Attempt to double-delete pointer not flagged!");
+    free(foo);
+    free(bar);
+    error("Attempt to double-delete pointer not flagged!");
 
     return 0;
     

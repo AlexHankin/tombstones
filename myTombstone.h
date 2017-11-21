@@ -8,21 +8,29 @@ template <class T>
 class MyTombstone {
 private:
 	T* pointerToObj;
-	int refCount;
+	int refCount = 0;
+	bool deleted = false;
 public:
 	//do I need to take refCount or always init refCount = 1
-	void setMyTombstone (T* obj, int count) {
+	// void setMyTombstone (T* obj, int count) {
+	// 	pointerToObj = obj;
+	//  	refCount = count;
+	// }
+	void setMyTombstone(T* obj) {
 		pointerToObj = obj;
-	 	refCount = count;
 	}
 	void incrementRefCount() {
-		cout << "call increment refcount \n";
-		printObj();
+		char const *cn = "call increment refcount \n";
+		
 		refCount++;
+		printObj(cn);
 		// return refCount;
 	}
 	void decrementRefCount() {
-		refCount--;		
+		char const *cn = "call decrement refCount\n";
+		refCount--;	
+		checkError();
+		printObj(cn);	
 		// return refCount;
 	}
 	int getrefCount() const{
@@ -30,37 +38,45 @@ public:
 	}
 	void deleteMyTombstone () {
 		cout << "deleting tombstone\n";
+		deleted = true;
 		pointerToObj = 0;
 		refCount = 0;
 	}
 	void checkError () {
 		//if object tombstone is pointing to is null
-		if (pointerToObj == 0 && refCount > 0) {
-			cout << "Tester1" << endl;
+		if (deleted) {
+			cout << "Tester0" << endl;
+		// 	error("Attempted to double delete: ");
+		// }
+		// if (pointerToObj == 0 && refCount > 0) {
+		// 	cout << "Tester1" << endl;
 			error("There is a dangling pointer concerning address: ");
 		}
 		//no pointers pointing to tombstone, but object isn't deleted
-		printObj();
-		if (refCount == 0 && pointerToObj) {
+		printObj("checkError ");
+		if (refCount <= 0 && pointerToObj) {
 			cout << "Tester2" << endl;
 			error("There is a memory leak concerning address: ");
 		}
 		//no pointers pointing to obj, object is deleted -> reclaim tombstone
-		if (refCount == 0 && !pointerToObj) {
-			{cout << "Tester3" << endl;
-			 deleteMyTombstone();
-			 printObj();
-		}
-		}
+		// if (refCount == 0 && !pointerToObj) {
+		// 	{cout << "Tester3" << endl;
+		// 	 deleteMyTombstone();
+		// 	 printObj();
+		// }
+		// }
 	}
-
+	bool getDeleted() const {
+		return deleted;
+	}
+ 
 	T* getObj () const{
 		return pointerToObj;
 	}
 
-	void printObj() const{
+	void printObj(char const* funcname) const{
 		if (pointerToObj == 0)
-			cout << "printing object: " << "NULL refCount: " << refCount << " \n\n";
+			cout << funcname << " printing object: " << "NULL refCount: " << refCount << " \n\n";
 		else
 			cout << "printing object: " << *pointerToObj << " refCount: " << refCount << " \n\n";
 	}
