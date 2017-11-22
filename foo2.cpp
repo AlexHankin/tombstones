@@ -17,9 +17,7 @@ void error(const char *text)
 int main(int argc, char **argv)
 {
     Pointer<int> foo;
-    cout << "befor = \n";
     foo = new int(12);
-    cout << "after = \n";
     Pointer<int> bar(foo);
 
     if (bar == 0)

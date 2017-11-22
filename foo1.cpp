@@ -17,11 +17,12 @@ void error(const char *text)
 int main(int argc, char **argv)
 {
     Pointer<int> foo(new int(12));
+    foo.setCheckError(false);
     Pointer<int> tmp((int*)NULL);
-    
-    cout << "hlo\n";
+    tmp.setCheckError(false);
+
     Pointer<int> bar = tmp;
-    cout << "hlo1\n";
+
 // foo 12, tmp NULL, bar NULL
     if (foo == 0)
      error("Foo shouldn't be null!");
@@ -30,6 +31,7 @@ int main(int argc, char **argv)
 	 error("Bar should be null!");
     
     bar = new int(12);
+    bar.setCheckError(false);
     // bar = new int(32);
 //foo 12, bar 12, tmp NULL 
     if (foo == bar)
@@ -42,7 +44,6 @@ int main(int argc, char **argv)
     
     free(foo);
     free(bar);
-    free(tmp);
     cout << "foo1: OK" << endl;
     return 0;
 }
