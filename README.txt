@@ -20,7 +20,8 @@ README.txt: This file.
 tombstones.h
 This file contains our template for the Pointer<T> class we were required to implement. More details are provided in the comments
 of the code but essentially we appropriately implemented all of our required methods for the template. This included creating all private
-parameters, including an additional one for offering a means of switching on and off error checking. We then implemented the rest of
+parameters, including an additional one for offering a means of switching on and off error checking. It can be used in test file by including following line: name_of_pointer.setCheckError(boolean). 
+We then implemented the rest of
 the methods consisting of creating Pointer objects, as well as comparing Pointer objects with themselves or other types. In doing so, 
 we consistently reference our tombstones.cc file to access the tombstones properly with our Pointer object.
 
